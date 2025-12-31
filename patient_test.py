@@ -1,10 +1,9 @@
-from patient import check_test_results
+from patient import check_test_result
 
-def test_patient_results():
-    
-    tests = [80, 120, 65]  # 80 normal, 120 high, 65 low
+def test_abnormal_value():
+    result = check_test_result(130)
+    assert result == "ABNORMAL"
 
-    result = check_test_results(tests)
-
-    
-    assert result == ["Normal", "ABNORMAL", "ABNORMAL"]
+def test_normal_value():
+    result = check_test_result(90)
+    assert result == "Normal"

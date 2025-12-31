@@ -1,3 +1,12 @@
+# patient.py
+
+def check_test_result(value):
+    if value < 70 or value > 110:
+        return "ABNORMAL"
+    else:
+        return "Normal"
+
+
 def patient_details():
     name = input("Enter patient name: ")
     age = int(input("Enter age: "))
@@ -15,13 +24,11 @@ def patient_details():
     print("Disease    :", disease)
     print("Room No    :", room_no)
 
-
     print("\n----- Test Results -----")
     for i, value in enumerate(tests, start=1):
-        if value < 70 or value > 110:
-            print(f"Test {i}: {value}  --> ABNORMAL")
-        else:
-            print(f"Test {i}: {value}  --> Normal")
+        status = check_test_result(value)
+        print(f"Test {i}: {value} --> {status}")
 
 
-patient_details()
+if __name__ == "__main__":
+    patient_details()

@@ -1,5 +1,6 @@
 # patient.py
 import os
+import sys
 
 
 def check_test_result(value=90):
@@ -30,27 +31,32 @@ def patient_details(
 
 
 def main():
+    # 1️⃣ COMMAND-LINE ARGUMENTS (Jenkins BEST METHOD)
+    # python patient.py Sameer 21 Fever 12A 95,120,85
+    if len(sys.argv) == 6:
+        name = sys.argv[1]
+        age = int(sys.argv[2])
+        disease = sys.argv[3]
+        room_no = sys.argv[4]
+        tests = list(map(int, sys.argv[5].split(",")))
+
+        patient_details(name, age, disease, room_no, tests)
+        return
+
+    # 2️⃣ ENVIRONMENT VARIABLES (if Jenkins exports them)
+    name = os.getenv("PATIENT_NAME")
+    age = os.getenv("AGE")
+    disease = os.getenv("DISEASE")
+    room_no = os.getenv("ROOM_NO")
+    tests_env = os.getenv("TESTS")
+
+    if all([name, age, disease, room_no, tests_env]):
+        tests = list(map(int, tests_env.split(",")))
+        patient_details(name, int(age), disease, room_no, tests)
+        return
+
+    # 3️⃣ MANUAL INPUT (local run)
     try:
-        # 🔹 Jenkins parameters (environment variables)
-        name = os.getenv("PATIENT_NAME")
-        age = os.getenv("AGE")
-        disease = os.getenv("DISEASE")
-        room_no = os.getenv("ROOM_NO")
-        tests_env = os.getenv("TESTS")  # example: 95,120,85
-
-        # If Jenkins parameters exist → use them
-        if all([name, age, disease, room_no, tests_env]):
-            tests = list(map(int, tests_env.split(",")))
-            patient_details(
-                name=name,
-                age=int(age),
-                disease=disease,
-                room_no=room_no,
-                tests=tests
-            )
-            return
-
-        # 🔹 Manual input (local run)
         name = input("Enter patient name: ")
         age = int(input("Enter age: "))
         disease = input("Enter disease: ")
@@ -63,7 +69,7 @@ def main():
         patient_details(name, age, disease, room_no, tests)
 
     except EOFError:
-        # 🔹 Final fallback (safe defaults)
+        # 4️⃣ FINAL FALLBACK
         patient_details()
 
 

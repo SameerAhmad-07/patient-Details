@@ -8,16 +8,10 @@ def check_test_result(value):
 
 
 def patient_details(name, age, disease, room_no, tests):
-    print("\n----- Patient Details -----")
-    print("Name       :", name)
-    print("Age        :", age)
-    print("Disease    :", disease)
-    print("Room No    :", room_no)
-
-    print("\n----- Test Results -----")
-    for i, value in enumerate(tests, start=1):
-        status = check_test_result(value)
-        print(f"Test {i}: {value} --> {status}")
+    results = []
+    for value in tests:
+        results.append(check_test_result(value))
+    return results
 
 
 def main():
@@ -31,8 +25,22 @@ def main():
         value = int(input(f"Enter Test {i+1} result: "))
         tests.append(value)
 
-    patient_details(name, age, disease, room_no, tests)
+    results = patient_details(name, age, disease, room_no, tests)
+
+    print("\n----- Patient Details -----")
+    print("Name       :", name)
+    print("Age        :", age)
+    print("Disease    :", disease)
+    print("Room No    :", room_no)
+
+    print("\n----- Test Results -----")
+    for i, status in enumerate(results, start=1):
+        print(f"Test {i}: {tests[i-1]} --> {status}")
 
 
-if __name__ == "__main__":
-    main()
+# 🚫 IMPORTANT:
+# Jenkins executes the file directly, so we must NOT auto-call main()
+# Uncomment the below line ONLY for manual execution
+
+# if __name__ == "__main__":
+#     main()

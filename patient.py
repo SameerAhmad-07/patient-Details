@@ -1,4 +1,6 @@
 # patient.py
+import os
+
 
 def check_test_result(value=90):
     if value < 70 or value > 110:
@@ -7,14 +9,14 @@ def check_test_result(value=90):
 
 
 def patient_details(
-    name="Uma",
-    age=25,
-    disease="Cancer",
-    room_no="321",
+    name="Unknown",
+    age=0,
+    disease="Not Specified",
+    room_no="NA",
     tests=None
 ):
     if tests is None:
-        tests = [90, 90, 90]  # default normal values
+        tests = [90, 90, 90]
 
     print("\n----- Patient Details -----")
     print("Name       :", name)
@@ -24,12 +26,31 @@ def patient_details(
 
     print("\n----- Test Results -----")
     for i, value in enumerate(tests, start=1):
-        status = check_test_result(value)
-        print(f"Test {i}: {value} --> {status}")
+        print(f"Test {i}: {value} --> {check_test_result(value)}")
 
 
 def main():
     try:
+        # 🔹 Jenkins parameters (environment variables)
+        name = os.getenv("PATIENT_NAME")
+        age = os.getenv("AGE")
+        disease = os.getenv("DISEASE")
+        room_no = os.getenv("ROOM_NO")
+        tests_env = os.getenv("TESTS")  # example: 95,120,85
+
+        # If Jenkins parameters exist → use them
+        if all([name, age, disease, room_no, tests_env]):
+            tests = list(map(int, tests_env.split(",")))
+            patient_details(
+                name=name,
+                age=int(age),
+                disease=disease,
+                room_no=room_no,
+                tests=tests
+            )
+            return
+
+        # 🔹 Manual input (local run)
         name = input("Enter patient name: ")
         age = int(input("Enter age: "))
         disease = input("Enter disease: ")
@@ -37,17 +58,14 @@ def main():
 
         tests = []
         for i in range(3):
-            value = int(input(f"Enter Test {i+1} result: "))
-            tests.append(value)
+            tests.append(int(input(f"Enter Test {i+1} result: ")))
 
         patient_details(name, age, disease, room_no, tests)
 
     except EOFError:
-        # Jenkins / pytest safe fallback
+        # 🔹 Final fallback (safe defaults)
         patient_details()
 
 
-# ⚠️ SAFE EXECUTION
-# main() runs ONLY when input is available
 if __name__ == "__main__":
     main()

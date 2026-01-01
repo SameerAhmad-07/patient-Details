@@ -38,9 +38,7 @@ def main():
         print(f"Test {i}: {tests[i-1]} --> {status}")
 
 
-# 🚫 IMPORTANT:
-# Jenkins executes the file directly, so we must NOT auto-call main()
-# Uncomment the below line ONLY for manual execution
 
-# if __name__ == "__main__":
-#     main()
+
+ if __name__ == "__main__":
+     main()

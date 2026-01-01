@@ -7,17 +7,7 @@ def check_test_result(value):
         return "Normal"
 
 
-def patient_details():
-    name = input("Enter patient name: ")
-    age = int(input("Enter age: "))
-    disease = input("Enter disease: ")
-    room_no = input("Enter room number: ")
-
-    tests = []
-    for i in range(3):
-        value = int(input(f"Enter Test {i+1} result: "))
-        tests.append(value)
-
+def patient_details(name, age, disease, room_no, tests):
     print("\n----- Patient Details -----")
     print("Name       :", name)
     print("Age        :", age)
@@ -30,5 +20,19 @@ def patient_details():
         print(f"Test {i}: {value} --> {status}")
 
 
+def main():
+    name = input("Enter patient name: ")
+    age = int(input("Enter age: "))
+    disease = input("Enter disease: ")
+    room_no = input("Enter room number: ")
+
+    tests = []
+    for i in range(3):
+        value = int(input(f"Enter Test {i+1} result: "))
+        tests.append(value)
+
+    patient_details(name, age, disease, room_no, tests)
+
+
 if __name__ == "__main__":
-    patient_details()
+    main()

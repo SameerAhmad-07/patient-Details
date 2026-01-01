@@ -36,10 +36,5 @@ def main():
     for i in range(3):
         print(f"Test {i+1}: {tests[i]} --> {results[i]}")
 
-
-# 🚫 IMPORTANT:
-# Jenkins/pytest must NOT execute input()
-# Uncomment ONLY when running manually
-
-# if __name__ == "__main__":
-#     main()
+ if __name__ == "__main__":
+    main()

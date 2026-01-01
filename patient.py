@@ -33,7 +33,7 @@ def patient_details(
 def main():
     # 1️⃣ COMMAND-LINE ARGUMENTS (Jenkins BEST METHOD)
     # python patient.py Sameer 21 Fever 12A 95,120,85
-    if len(sys.argv) == 6:
+    if len(sys.argv) == 5:
         name = sys.argv[1]
         age = int(sys.argv[2])
         disease = sys.argv[3]

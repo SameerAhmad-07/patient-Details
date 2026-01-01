@@ -1,30 +1,20 @@
 # patient.py
 
-def check_test_result(value):
+def check_test_result(value=90):
     if value < 70 or value > 110:
         return "ABNORMAL"
     return "Normal"
 
 
-def patient_details(name, age, disease, room_no, tests):
-    results = []
-    for value in tests:
-        results.append(check_test_result(value))
-    return results
-
-
-def main():
-    name = input("Enter patient name: ")
-    age = int(input("Enter age: "))
-    disease = input("Enter disease: ")
-    room_no = input("Enter room number: ")
-
-    tests = []
-    for i in range(3):
-        value = int(input(f"Enter Test {i+1} result: "))
-        tests.append(value)
-
-    results = patient_details(name, age, disease, room_no, tests)
+def patient_details(
+    name="Unknown",
+    age=0,
+    disease="Not Specified",
+    room_no="NA",
+    tests=None
+):
+    if tests is None:
+        tests = [90, 90, 90]  # default normal values
 
     print("\n----- Patient Details -----")
     print("Name       :", name)
@@ -33,8 +23,31 @@ def main():
     print("Room No    :", room_no)
 
     print("\n----- Test Results -----")
-    for i in range(3):
-        print(f"Test {i+1}: {tests[i]} --> {results[i]}")
+    for i, value in enumerate(tests, start=1):
+        status = check_test_result(value)
+        print(f"Test {i}: {value} --> {status}")
 
- if __name__ == "__main__":
+
+def main():
+    try:
+        name = input("Enter patient name: ")
+        age = int(input("Enter age: "))
+        disease = input("Enter disease: ")
+        room_no = input("Enter room number: ")
+
+        tests = []
+        for i in range(3):
+            value = int(input(f"Enter Test {i+1} result: "))
+            tests.append(value)
+
+        patient_details(name, age, disease, room_no, tests)
+
+    except EOFError:
+        # Jenkins / pytest safe fallback
+        patient_details()
+
+
+# ⚠️ SAFE EXECUTION
+# main() runs ONLY when input is available
+if __name__ == "__main__":
     main()

@@ -3,8 +3,7 @@
 def check_test_result(value):
     if value < 70 or value > 110:
         return "ABNORMAL"
-    else:
-        return "Normal"
+    return "Normal"
 
 
 def patient_details(name, age, disease, room_no, tests):
@@ -34,11 +33,13 @@ def main():
     print("Room No    :", room_no)
 
     print("\n----- Test Results -----")
-    for i, status in enumerate(results, start=1):
-        print(f"Test {i}: {tests[i-1]} --> {status}")
+    for i in range(3):
+        print(f"Test {i+1}: {tests[i]} --> {results[i]}")
 
 
+# 🚫 IMPORTANT:
+# Jenkins/pytest must NOT execute input()
+# Uncomment ONLY when running manually
 
-
- if __name__ == "__main__":
-     main()
+# if __name__ == "__main__":
+#     main()

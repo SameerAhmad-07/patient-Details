@@ -7,10 +7,10 @@ def check_test_result(value=90):
 
 
 def patient_details(
-    name="Unknown",
-    age=0,
-    disease="Not Specified",
-    room_no="NA",
+    name="Uma",
+    age=25,
+    disease="Cancer",
+    room_no="321",
     tests=None
 ):
     if tests is None:
